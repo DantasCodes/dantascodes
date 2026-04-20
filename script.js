@@ -13,7 +13,6 @@ let lastVolume = 50;
 const phrases = [
     "✧ Ola, eu sou o Dantas 🤍",
     "✧ Programador",
-    "✧ Streamer",
     "✧ Criador de Conteúdo",
 ];
 let phraseIndex = 0;
