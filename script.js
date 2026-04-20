@@ -12,11 +12,9 @@ let lastVolume = 50;
 // Efeito de digitação
 const phrases = [
     "✧ Ola, eu sou o Dantas 🤍",
-    "✧ Gamer",
     "✧ Programador",
     "✧ Streamer",
     "✧ Criador de Conteúdo",
-    "✧ developed by dantas"
 ];
 let phraseIndex = 0;
 let charIndex = 0;
