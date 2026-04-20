@@ -1,15 +1,15 @@
-// Seleção de elementos
+// Seleção de elementos = DANTAS
 const video = document.getElementById('bg-video');
 const volumeSlider = document.getElementById('volume-slider');
 const muteBtn = document.getElementById('mute-btn');
 const icon = document.getElementById('volume-icon');
 const overlay = document.getElementById('entry-overlay');
 
-// Controle para evitar múltiplos cliques
+// Controle para evitar múltiplos cliques = DANTAS
 let started = false;
 let lastVolume = 50;
 
-// Efeito de digitação
+// Efeito de digitação = DANTAS
 const phrases = [
     "✧ Ola, eu sou o Dantas 🤍",
     "✧ Programador",
@@ -46,12 +46,12 @@ function typeEffect() {
     setTimeout(typeEffect, speed);
 }
 
-// Iniciar efeito de digitação quando a página carregar
+// Iniciar efeito de digitação quando a página carregar = DANTAS
 if (dynamicText) {
     setTimeout(typeEffect, 500);
 }
 
-// Função para atualizar o ícone de volume
+// Função para atualizar o ícone de volume = DANTAS
 function updateIcon(isMuted) {
     if (isMuted) {
         icon.innerHTML = '<path fill="currentColor" d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.4,12.58C16.46,12.39 16.5,12.2 16.5,12Z" />';
@@ -60,7 +60,7 @@ function updateIcon(isMuted) {
     }
 }
 
-// --- FUNÇÃO PRINCIPAL (DISPARADA AO CLICAR NA ARANHA) ---
+// --- FUNÇÃO PRINCIPAL (DISPARADA AO CLICAR NA ARANHA) --- = DANTAS
 function startExperience() {
     if (started) return;
     started = true;
@@ -74,7 +74,7 @@ function startExperience() {
     
     if (video) {
         video.addEventListener('error', () => {
-            console.log('Vídeo não encontrado, verificando o caminho: assets/video/Kaoruko.mp4');
+            console.log('Vídeo não encontrado, verificando o caminho: assets/video/ENDS.mp4');
             if (volumeSlider) volumeSlider.disabled = true;
             if (muteBtn) muteBtn.disabled = true;
         });
@@ -85,7 +85,7 @@ function startExperience() {
     }
 }
 
-// Lógica do botão Mudo / Desmudo
+// Lógica do botão Mudo / Desmudo = DANTAS
 if (muteBtn) {
     muteBtn.addEventListener('click', () => {
         if (video) {
@@ -104,7 +104,7 @@ if (muteBtn) {
     });
 }
 
-// Atualizar ícone conforme o slider
+// Atualizar ícone conforme o slider = DANTAS
 if (volumeSlider) {
     volumeSlider.addEventListener('input', (e) => {
         const value = parseInt(e.target.value);
@@ -116,28 +116,28 @@ if (volumeSlider) {
     });
 }
 
-// Sincronizar slider com volume inicial do vídeo
+// Sincronizar slider com volume inicial do vídeo = DANTAS
 if (video && volumeSlider) {
     video.volume = volumeSlider.value / 100;
     video.muted = true;
 }
 
-// Garantir que o vídeo tente carregar
+// Garantir que o vídeo tente carregar = DANTAS
 if (video) {
     video.load();
 }
 
-// ========== SISTEMA DE DETECÇÃO DE LIVE DA TWITCH ==========
+// ========== SISTEMA DE DETECÇÃO DE LIVE DA TWITCH ========== = DANTAS
 
 const TWITCH_CONFIG = {
     clientId: 'qz8pavotji46j4rwmmlkq05jp73wgn',
     accessToken: '970ipomt0lufbjca78a9l8i9oxh5mn',
     channelName: 'dantasfps1',
     gameImage: 'assets/images/capital.png',
-    gameName: 'Capital City - Polícia'
+    gameName: '[+18] Dantas policia civil - Capital City'
 };
 
-// Cache para não fazer muitas requisições
+// Cache para não fazer muitas requisições = DANTAS
 let liveCache = {
     isLive: false,
     lastCheck: 0,
@@ -145,11 +145,11 @@ let liveCache = {
     title: ''
 };
 
-// Função para verificar status na Twitch
+// Função para verificar status na Twitch = DANTAS
 async function checkTwitchLive() {
     const now = Date.now();
     
-    // Verificar cache (a cada 60 segundos)
+    // Verificar cache (a cada 60 segundos) = DANTAS
     if (liveCache.lastCheck && (now - liveCache.lastCheck) < 60000) {
         return liveCache;
     }
@@ -180,7 +180,7 @@ async function checkTwitchLive() {
     }
 }
 
-// Função para atualizar a interface da live
+// Função para atualizar a interface da live = DANTAS
 async function updateLiveUI() {
     const status = await checkTwitchLive();
     
@@ -188,30 +188,27 @@ async function updateLiveUI() {
     const liveDot = document.getElementById('live-dot');
     const liveText = document.getElementById('live-text');
     const watchButton = document.getElementById('watch-button');
-    const liveTitle = document.getElementById('live-title');
     
     if (!liveStatusDiv) return;
     
     if (status.isLive) {
-        // AO VIVO
+        // AO VIVO = DANTAS
         liveStatusDiv.classList.remove('offline');
         liveStatusDiv.classList.add('live');
         liveText.textContent = 'AO VIVO';
         watchButton.textContent = 'Assistir';
         watchButton.href = `https://twitch.tv/${TWITCH_CONFIG.channelName}`;
-        liveTitle.textContent = status.title.substring(0, 50);
     } else {
-        // OFFLINE
+        // OFFLINE = DANTAS
         liveStatusDiv.classList.remove('live');
         liveStatusDiv.classList.add('offline');
         liveText.textContent = 'OFFLINE';
         watchButton.textContent = 'Assistir';
         watchButton.href = `https://twitch.tv/${TWITCH_CONFIG.channelName}`;
-        liveTitle.textContent = TWITCH_CONFIG.gameName;
     }
 }
 
-// Iniciar verificação de live
+// Iniciar verificação de live = DANTAS
 function startLiveChecker() {
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', () => {
@@ -224,5 +221,5 @@ function startLiveChecker() {
     }
 }
 
-// Iniciar o sistema de live
+// Iniciar o sistema de live = DANTAS
 startLiveChecker();
