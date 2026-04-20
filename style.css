@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 /* Configurações Gerais */
 body, html {
@@ -95,13 +95,12 @@ body, html {
 .profile-card {
     position: relative;
     z-index: 3;
-    text-align: center;
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 24px;
     padding: 30px 40px 35px 40px;
-    min-width: 340px;
+    min-width: 400px;
     transition: all 0.3s ease;
 }
 
@@ -109,16 +108,24 @@ body, html {
     border-color: rgba(255, 255, 255, 0.15);
 }
 
+/* Header com foto à esquerda e informações à direita */
+.profile-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
 /* Foto de perfil com anel angry */
 .profile-image-wrapper {
     position: relative;
     display: inline-block;
-    margin-bottom: 15px;
+    flex-shrink: 0;
 }
 
 .profile-image {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid rgba(255, 255, 255, 0.2);
@@ -133,13 +140,13 @@ body, html {
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
 }
 
-/* Anel angry ao redor da foto - estilo decoração Discord */
+/* Anel angry ao redor da foto */
 .angry-ring {
     position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
     z-index: 3;
     pointer-events: none;
     display: flex;
@@ -148,26 +155,107 @@ body, html {
 }
 
 .angry-img {
-    width:100%;
+    width: 100%;
     height: 100%;
     object-fit: contain;
 }
 
-/* Nome */
-.username {
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: 4px;
+/* Informações do lado direito */
+.profile-info {
+    flex: 1;
+    text-align: left;
+}
+
+/* Developer Badge - AZUL */
+.developer-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    padding: 6px 12px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 10px;
+    transition: transform 0.3s ease;
+}
+
+.developer-badge:hover {
+    transform: translateY(-2px);
+    border-color: rgba(88, 101, 242, 0.4);
+}
+
+.badge-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    background: #5865f2;
+    border-radius: 5px;
+    box-shadow: 0 0 8px rgba(88, 101, 242, 0.6);
+}
+
+.badge-icon svg {
+    width: 10px;
+    height: 10px;
     color: #ffffff;
-    margin-bottom: 5px;
+    stroke: #ffffff;
+}
+
+.badge-text {
+    font-size: 10px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.3px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Nome com brilho */
+.username-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.username {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: #ffffff;
     text-transform: uppercase;
-    font-family: 'Poppins', 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
+    position: relative;
+    display: inline-block;
+    background: linear-gradient(90deg, #fff, #fff, #fff, #3e70dd, #fff, #fff, #fff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+.shine-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 4px #3e70dd);
+}
+
+.shine-icon svg {
+    width: 18px;
+    height: 18px;
 }
 
 .user-handle {
     font-size: 0.7rem;
     color: rgba(255, 255, 255, 0.5);
-    margin-bottom: 20px;
     font-family: monospace;
     letter-spacing: 1px;
 }
@@ -179,6 +267,8 @@ body, html {
     color: rgba(255, 255, 255, 0.7);
     font-family: monospace;
     min-height: 40px;
+    text-align: center;
+    font-style: italic;
 }
 
 #dynamic-text {
@@ -200,7 +290,7 @@ body, html {
     display: flex;
     justify-content: center;
     gap: 12px;
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     flex-wrap: wrap;
 }
 
@@ -233,7 +323,99 @@ body, html {
     fill: #ffffff;
 }
 
-/* Location Box - igual ao botão do Discord */
+/* Live Status */
+.live-status {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 15px;
+    transition: all 0.3s ease;
+}
+
+.live-status:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.live-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.live-icon-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.live-info {
+    flex: 1;
+}
+
+.live-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b30;
+    border-radius: 50%;
+    animation: pulse-red 1.5s infinite;
+}
+
+@keyframes pulse-red {
+    0%, 100% { opacity: 1; transform: scale(1); background-color: #ff3b30; }
+    50% { opacity: 0.5; transform: scale(1.2); background-color: #ff6b60; }
+}
+
+.live-text {
+    font-size: 0.7rem;
+    color: #ff3b30;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.watch-button {
+    margin-left: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 0.65rem;
+    color: #ffffff;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.watch-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.live-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.live-user {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: monospace;
+}
+
+/* Location Box */
 .location-box {
     display: inline-flex;
     align-items: center;
@@ -247,6 +429,7 @@ body, html {
     color: rgba(255, 255, 255, 0.5);
     transition: all 0.3s ease;
     margin-top: 5px;
+    width: fit-content;
 }
 
 .location-box:hover {
@@ -303,7 +486,7 @@ body, html {
     height: 18px;
 }
 
-/* Slider Container - escondido por padrão */
+/* Slider Container */
 .slider-container {
     background: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(5px);
@@ -317,7 +500,6 @@ body, html {
     transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Mostra o slider quando o mouse está no .audio-control */
 .audio-control:hover .slider-container {
     opacity: 1;
     visibility: visible;
@@ -362,7 +544,7 @@ input[type="range"]::-moz-range-track {
     border-radius: 2px;
 }
 
-/* Botão personalizado no canto inferior esquerdo */
+/* Botão personalizado */
 .custom-button {
     position: fixed;
     bottom: 24px;
@@ -423,17 +605,23 @@ input[type="range"]::-moz-range-track {
 @media (max-width: 480px) {
     .profile-card {
         padding: 20px 25px 30px 25px;
-        min-width: 280px;
+        min-width: 320px;
     }
     
-    .profile-image { width: 80px; height: 80px; }
-    .username { font-size: 1.2rem; }
+    .profile-header {
+        gap: 15px;
+    }
+    
+    .profile-image { width: 60px; height: 60px; }
+    .username { font-size: 1.1rem; letter-spacing: 2px; }
+    .badge-text { font-size: 8px; }
+    .badge-icon { width: 14px; height: 14px; }
     
     .angry-ring {
-        top: -14px;
-        left: -14px;
-        right: -14px;
-        bottom: -14px;
+        top: -6px;
+        left: -6px;
+        right: -6px;
+        bottom: -6px;
     }
     
     .social-links a {
@@ -495,5 +683,19 @@ input[type="range"]::-moz-range-track {
     .location-box {
         padding: 6px 12px;
         font-size: 0.65rem;
+    }
+    
+    .watch-button {
+        padding: 3px 8px;
+        font-size: 0.55rem;
+    }
+    
+    .live-title {
+        font-size: 0.8rem;
+    }
+    
+    .live-icon-img {
+        width: 32px;
+        height: 32px;
     }
 }

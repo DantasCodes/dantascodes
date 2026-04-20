@@ -75,7 +75,7 @@ function startExperience() {
     
     if (video) {
         video.addEventListener('error', () => {
-            console.log('Vídeo não encontrado, verificando o caminho: assets/video/Espresso.mp4');
+            console.log('Vídeo não encontrado, verificando o caminho: assets/video/Kaoruko.mp4');
             if (volumeSlider) volumeSlider.disabled = true;
             if (muteBtn) muteBtn.disabled = true;
         });
@@ -127,3 +127,103 @@ if (video && volumeSlider) {
 if (video) {
     video.load();
 }
+
+// ========== SISTEMA DE DETECÇÃO DE LIVE DA TWITCH ==========
+
+const TWITCH_CONFIG = {
+    clientId: 'qz8pavotji46j4rwmmlkq05jp73wgn',
+    accessToken: '970ipomt0lufbjca78a9l8i9oxh5mn',
+    channelName: 'dantasfps1',
+    gameImage: 'assets/images/capital.png',
+    gameName: 'Capital City - Polícia'
+};
+
+// Cache para não fazer muitas requisições
+let liveCache = {
+    isLive: false,
+    lastCheck: 0,
+    viewerCount: 0,
+    title: ''
+};
+
+// Função para verificar status na Twitch
+async function checkTwitchLive() {
+    const now = Date.now();
+    
+    // Verificar cache (a cada 60 segundos)
+    if (liveCache.lastCheck && (now - liveCache.lastCheck) < 60000) {
+        return liveCache;
+    }
+    
+    try {
+        const response = await fetch(`https://api.twitch.tv/helix/streams?user_login=${TWITCH_CONFIG.channelName}`, {
+            headers: {
+                'Client-ID': TWITCH_CONFIG.clientId,
+                'Authorization': `Bearer ${TWITCH_CONFIG.accessToken}`
+            }
+        });
+        
+        const data = await response.json();
+        const isLive = data.data && data.data.length > 0;
+        const stream = data.data[0];
+        
+        liveCache = {
+            isLive: isLive,
+            lastCheck: now,
+            viewerCount: isLive ? stream.viewer_count : 0,
+            title: isLive ? stream.title : TWITCH_CONFIG.gameName
+        };
+        
+        return liveCache;
+    } catch (error) {
+        console.log('Erro ao verificar live:', error);
+        return liveCache;
+    }
+}
+
+// Função para atualizar a interface da live
+async function updateLiveUI() {
+    const status = await checkTwitchLive();
+    
+    const liveStatusDiv = document.getElementById('live-status');
+    const liveDot = document.getElementById('live-dot');
+    const liveText = document.getElementById('live-text');
+    const watchButton = document.getElementById('watch-button');
+    const liveTitle = document.getElementById('live-title');
+    
+    if (!liveStatusDiv) return;
+    
+    if (status.isLive) {
+        // AO VIVO
+        liveStatusDiv.classList.remove('offline');
+        liveStatusDiv.classList.add('live');
+        liveText.textContent = 'AO VIVO';
+        watchButton.textContent = 'Assistir';
+        watchButton.href = `https://twitch.tv/${TWITCH_CONFIG.channelName}`;
+        liveTitle.textContent = status.title.substring(0, 50);
+    } else {
+        // OFFLINE
+        liveStatusDiv.classList.remove('live');
+        liveStatusDiv.classList.add('offline');
+        liveText.textContent = 'OFFLINE';
+        watchButton.textContent = 'Assistir';
+        watchButton.href = `https://twitch.tv/${TWITCH_CONFIG.channelName}`;
+        liveTitle.textContent = TWITCH_CONFIG.gameName;
+    }
+}
+
+// Iniciar verificação de live
+function startLiveChecker() {
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', () => {
+            updateLiveUI();
+            setInterval(updateLiveUI, 60000);
+        });
+    } else {
+        updateLiveUI();
+        setInterval(updateLiveUI, 60000);
+    }
+}
+
+// Iniciar o sistema de live
+startLiveChecker();
