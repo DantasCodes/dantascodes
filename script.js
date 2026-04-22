@@ -14,7 +14,6 @@ const phrases = [
     "✧ Ola, eu sou o Dantas 🤍",
     "✧ Programador",
     "✧ Criador de Conteúdo",
-    "✧ Aqui a filha chora e a mãe não vê 🤍",
 ];
 let phraseIndex = 0;
 let charIndex = 0;
